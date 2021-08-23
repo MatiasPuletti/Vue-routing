@@ -33,7 +33,7 @@ export default {
       teams: this.teams,
       users: this.users
     };
-  },
+  }
 };
 </script>
 

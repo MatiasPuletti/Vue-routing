@@ -11,9 +11,14 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/', redirect: '/teams' },
-    { path: '/teams', component: TeamsList }, // With alias the url doesn't change, unlike with redirect
+    {
+      path: '/teams',
+      component: TeamsList,
+      children: [
+        { path: ':teamId', component: TeamMembers, props: true }
+      ]
+    }, // With alias the url doesn't change, unlike with redirect
     { path: '/users', component: UsersList }, // our-domain.com/users => UsersList
-    { path: '/teams/:teamId', component: TeamMembers, props: true },
     { path: '/:notFound(.*)', component: NotFound } // Dynamic segment with a reg expression that means any character combination should lead to this route being loaded.
   ],
   linkActiveClass: 'active'

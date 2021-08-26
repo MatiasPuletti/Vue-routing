@@ -6,6 +6,8 @@ import TeamsList from './components/teams/TeamsList.vue';
 import UsersList from './components/users/UsersList.vue';
 import TeamMembers from './components/teams/TeamMembers.vue';
 import NotFound from './components/nav/NotFound.vue';
+import TeamsFooter from './components/teams/TeamsFooter.vue';
+import UsersFooter from './components/users/UsersFooter.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -14,18 +16,24 @@ const router = createRouter({
     {
       name: 'teams',
       path: '/teams',
-      component: TeamsList,
+      components: { default: TeamsList, footer: TeamsFooter },
       children: [
         {
           name: 'team-members',
           path: ':teamId',
           component: TeamMembers,
           props: true
-        }
+        } // /teams/t1
       ]
-    }, // With alias the url doesn't change, unlike with redirect
-    { path: '/users', component: UsersList }, // our-domain.com/users => UsersList
-    { path: '/:notFound(.*)', component: NotFound } // Dynamic segment with a reg expression that means any character combination should lead to this route being loaded.
+    }, // our-domain.com/teams => TeamsList
+    {
+      path: '/users',
+      components: {
+        default: UsersList,
+        footer: UsersFooter
+      }
+    },
+    { path: '/:notFound(.*)', component: NotFound }
   ],
   linkActiveClass: 'active'
 });
